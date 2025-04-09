@@ -32,7 +32,7 @@ export default function Todo(props) {
             <div className="mutations">
                 <button
                     className="todo__status"
-                    onClick={() => updateTodo(todo._id, todo.status)}
+                    onClick={() => updateTodo(todo._id, !todo.status)}
                 >
                     {(todo.status) ? "☑" : "☐"}
                 </button>
