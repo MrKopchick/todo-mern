@@ -1,5 +1,5 @@
 # Simple TODO
- - That's jusе a simple MERN project
+ - That's just a simple MERN project
  - Has good architecture in backend
  - was done in less than 3 hours
 # how it looks like:
