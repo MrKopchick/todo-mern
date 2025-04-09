@@ -1,16 +1,19 @@
-const express = require('express');
-const cors = require('cors');   
+require('dotenv').config();
 
-const router = require('./routes/routes.js');
+const app = require('./src/app');
+const { connectToMongoDB } = require('./src/config/db.config');
 
-const app = express();
+const PORT = process.env.PORT || 3001;
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+(async () => {
+    try {
+        await connectToMongoDB();
 
-app.use('/api',router);
-
-app.listen(3001, () => {
-    console.log('Server is running on http://localhost:3001');
-});
+        app.listen(PORT, () => {
+            console.log(`[Server] Listening on http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error('[Server] Failed to start:', error);
+        process.exit(1);
+    }
+})();
