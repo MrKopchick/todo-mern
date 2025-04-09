@@ -1,20 +1,21 @@
 const express = require('express');
 const cors = require('cors');
-const morgan = require('morgan');
+const todoRoutes = require('./routes/todo.routes');
 
-const app = express();
+const createApp = () => {
+    const app = express();
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+    app.use(cors());
+    app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send({ message: 'API is running' });
-});
+    app.use('/api', todoRoutes);
 
-app.use((req, res) => {
-    res.status(404).json({ message: 'Endpoint not found' });
-});
+    app.use((err, req, res, next) => {
+        console.error('[Unhandled Error]', err);
+        res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+    });
 
-module.exports = app;
+    return app;
+};
+
+module.exports = createApp;
